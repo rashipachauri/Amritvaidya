@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Trends</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #F0F8FF;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(45deg, #b2dfdb, #e1f5fe, #dcedc1);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header img {
+            height: 100px;
+            width: 100px;
+        }
+.menu {
+            display: flex;
+            gap: 35px;
+            position: relative;
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            position: relative;
+            font-size: 20px;
+        }
+
+        .menu-item {
+            position: relative;
+            font-size: 20px;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            background: #4db6ac;
+            border: 1px solid #ddd;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1000;
+            min-width: 250px;
+            overflow: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            background: white;
+            border-radius: 8px;
+            margin: 5px 10px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .dropdown a:hover {
+            background-color: #b2dfdb;
+            transform: scale(1.05);
+        }
+
+        .dropdown.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-item:hover .dropdown {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-item:last-child .dropdown {
+            left: auto;
+            right: 0;
+        }
+
+        /* Footer styles */
+        .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right, #b2fefa, #0ed2f7);
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+
+        .header {
+            background:linear-gradient(135deg, #ffffcc, #4ca1af);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+             color:black;
+            font-size: 38px;
+          font-weight: bold;
+        }
+
+       .search-container {
+    margin: 20px auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    max-width: 600px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-container input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-container input:focus {
+    border-color: #007bff;
+}
+
+.search-container button {
+    padding: 12px 18px;
+    font-size: 1rem;
+    background: #4ca1af;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.search-container button:hover {
+    background: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 10px;
+        }
+
+        .category {
+            background: #26547c;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .category:hover {
+            background: #26547c;
+        }
+
+        .articles-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .article {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .article img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 10px;
+        }
+
+        .article-content h3 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .article-content p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .article-content a {
+            display: block;
+            margin-top: 10px;
+            color: #4ca1af;
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+        .footer {
+    background: linear-gradient(to right, #b2fefa, #0ed2f7);
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+    <img src="images/LOGO.png" alt="AmritaVaidya Logo">
+    <div class="menu">
+        <div class="menu-item">
+            <a href="#">Login</a>
+            <div class="dropdown">
+                <a href="login1.jsp">Are you a Patient?</a>
+                <a href="login1.jsp">Are you a Doctor?</a>
+            </div>
+        </div>
+        <a href="started.jsp">Home</a>
+        <a href="#about">About Us</a>
+        <a href="faq.jsp">FAQs</a>
+        <a href="contact.html">Contact Us</a>
+        <div class="menu-item">
+            <a href="#">Profile</a>
+            <div class="dropdown">
+                <a href="profile.jsp">My Profile</a>
+                <a href="logout.jsp">Sign Out</a>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="header">
+        <h1>Latest Health Trends</h1>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search health topics...">
+        <button id="search-button">Search</button>
+    </div>
+
+    <div class="categories" id="categories">
+        <div class="category" data-category="Healthy Eating">Healthy Eating</div>
+        <div class="category" data-category="Weight Loss">Weight Loss</div>
+        <div class="category" data-category="Mental Health">Mental Health</div>
+        <div class="category" data-category="Fitness">Fitness</div>
+        <div class="category" data-category="Skin Care">Skin Care</div>
+    </div>
+
+    <div class="loading" id="loading" style="display: none;">Loading articles...</div>
+
+    <div class="articles-container" id="articles-container"></div>
+
+    <script>
+        const API_KEY = '83ad32f7abf6465d96494a5bc1d8652d';
+        const BASE_URL = 'https://newsapi.org/v2/everything';
+
+        const categories = document.querySelectorAll('.category');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const articlesContainer = document.getElementById('articles-container');
+        const loadingIndicator = document.getElementById('loading');
+
+        async function fetchArticles(query = '') {
+            loadingIndicator.style.display = 'block';
+            articlesContainer.innerHTML = '';
+
+            try {
+                const url = `${BASE_URL}?q=${encodeURIComponent(query)}&apiKey=${API_KEY}&pageSize=10`;
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch articles. Check your API key or network connection.');
+                }
+
+                const data = await response.json();
+                displayArticles(data.articles);
+            } catch (error) {
+                articlesContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            } finally {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        function displayArticles(articles) {
+            if (!articles.length) {
+                articlesContainer.innerHTML = '<p>No articles found.</p>';
+                return;
+            }
+
+            articles.forEach(article => {
+                const articleDiv = document.createElement('div');
+                articleDiv.classList.add('article');
+                articleDiv.innerHTML = `
+                    <img src="${article.urlToImage || 'https://via.placeholder.com/300'}" alt="${article.title}">
+                    <div class="article-content">
+                        <h3>${article.title}</h3>
+                        <p>${article.description || 'No description available.'}</p>
+                        <a href="${article.url}" target="_blank">Read more</a>
+                    </div>
+                `;
+                articlesContainer.appendChild(articleDiv);
+            });
+        }
+
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                const categoryName = category.dataset.category;
+                fetchArticles(categoryName);
+            });
+        });
+
+        searchButton.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                fetchArticles(query);
+            }
+        });
+
+        fetchArticles('health');
+    </script>
+    <footer class="footer">
+   
+    <p>© 2025 Amritavaidya. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

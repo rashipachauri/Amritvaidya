@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Payment Mode</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+     background: #fff;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      }
+   
+   
+    .header {
+           display: flex;
+    justify-content: space-between; /* Logo on the left, menu centered */
+    align-items: center;
+    background: linear-gradient(45deg, #b2dfdb, #e1f5fe, #dcedc1);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+             }
+
+           .profile-container {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #0077b6;
+        }
+        .dropdown-profile-container {
+            display: none;
+            position: absolute;
+            top: 110px;
+            left: -100%;
+            transform: translateX(-50%);
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1000;
+            width: 280px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .dropdown-profile-container .images-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+            padding: 5px;
+        }
+        .dropdown-profile-container img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .dropdown-profile-container img:hover {
+            transform: scale(1.1);
+        }
+        .header img {
+            height: 100px;
+            width: 100px;
+        }
+        .menu {
+           display: flex;
+    gap: 35px;
+    background-color: white;
+    padding: 10px 20px; /* Adjusted padding */
+    border-radius: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+        }
+        .menu a {
+           text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+        }
+        .menu-item {
+            position: relative;
+           font-size: 20px;
+        }
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+              background: #4db6ac;
+            border: 1px solid #ddd;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1000;
+            min-width: 250px;
+            overflow: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+           
+   
+        }
+        .dropdown a {
+        display: block;
+        padding: 12px 20px;
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        background: white;
+        border-radius: 8px;
+        margin: 5px 10px;
+        transition: background 0.3s ease, transform 0.2s ease;
+        }
+       
+        .dropdown a:hover {
+            background-color: #b2dfdb;
+    transform: scale(1.05);
+        }
+       
+        .dropdown.show {
+          display: block;
+          opacity: 1;
+          transform: translateY(0);
+}
+        .menu-item:hover .dropdown {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .menu-item:last-child .dropdown {
+            left: auto;
+            right: 0;
+        }
+         
+       
+    .container {
+      display: flex;
+      width: 70%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin: 70px auto; /* Center the container */
+     
+    }
+    .left-section {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: url('images/V1.jpg') no-repeat center center; /* Set background image */
+      background-size: cover; /* Cover the entire section */
+      border-radius: 10px; /* Optional: add border radius */
+    }
+    .right-section {
+      width: 50%;
+      padding: 20px
+    }
+    h2 {
+      text-align: center;
+    }
+    .investment-amount {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #444;
+    }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .payment-option:last-child {
+      border-bottom: none;
+    }
+    .payment-option img {
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+    }
+    .payment-option label {
+      font-size: 1.1rem;
+      color: #333;
+      flex-grow: 1;
+    }
+    .arrow {
+      font-size: 1.5rem;
+      color: #999;
+      cursor: pointer;
+    }
+    .arrow img {
+      width: 20px;
+      height: 20px;
+    }
+    .payment-details {
+      display: none;
+      margin-top: 20px;
+      padding-left: 10px;
+    }
+    .upi-apps {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .upi-app img {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .upi-app img.selected {
+      border-color: #007bff;
+    }
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .input-field-small {
+      width: 30%;
+      padding: 10px;
+      font-size: 1rem;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2rem;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      background: #289c8e;
+    }
+    .small-btn {
+      width: auto;
+      padding: 10px 15px;
+      font-size: 1rem;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .small-btn:hover {
+      background-color: #218838;
+    }
+    .card-container {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .card-type-img {
+      display: none; /* Hidden initially */
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 50px;
+      height: 35px; /* Match the input height */
+    }
+    .verify-message {
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+    h1 {
+      text-align: center; /* Center the heading */
+      margin: 20px 0; /* Add margin for spacing */
+      color: white;
+    }
+    .footer {
+        position: relative;
+        background: linear-gradient(to right, #b2fefa, #0ed2f7);
+        padding: 20px 15px;
+        text-align: center;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 40px;
+        overflow: hidden;
+    }
+
+  </style>
+</head>
+<body>
+   <div class="header">
+        <img src="images/LOGO.png" alt="AmritaVaidya Logo">
+        <div class="menu">
+            <div class="menu-item">
+                <a href="#">Login</a>
+                <div class="dropdown">
+                    <a href="login1.jsp">Are you a Patient?</a>
+                    <a href="login1.jsp">Are you a Doctor?</a>
+                </div>
+            </div>
+            <a href="started.jsp">Home</a>
+            <a href="#about">About Us</a>
+            <a href="faq.jsp">FAQs</a>
+           
+            <a href="#contact">Contact Us</a>
+           
+            <div class="menu-item">
+                <a href="#">Profile</a>
+                <div class="dropdown">
+                    <a href="profile.jsp">My Profile</a>
+                   
+                    <a href="logout.jsp">Sign Out</a>
+                   
+                </div>
+            </div>
+            </div>
+         
+       
+    </div>
+   
+   
+ 
+  <div class="container">
+    <div class="left-section">
+      <!-- Removed the <img> tag, background image is set in CSS -->
+    </div>
+    <div class="right-section">
+      <p class="investment-amount">Investment Amount: ₹00</p>
+
+      <!-- Payment Options -->
+      <div class="payment-option" onclick="showDetails('upi')">
+        <img src="images/upi.png" alt="UPI Icon">
+        <label>UPI Payment</label>
+        <span class="arrow"><img src="Images/right-arrow.png"></span>
+      </div>
+
+      <div class="payment-option" onclick="showDetails('upi-id')">
+        <img src="images/bhim-upi.png" alt="UPI ID Icon">
+        <label>Enter UPI ID</label>
+        <span class="arrow"><img src="Images/right-arrow.png"></span>
+      </div>
+
+      <div class="payment-option" onclick="showDetails('card')">
+        <img src="images/credit.png" alt="Card Icon">
+        <label>Credit/Debit Card</label>
+        <span class="arrow"><img src="Images/right-arrow.png"></span>
+      </div>
+
+      <div class="payment-option" onclick="showDetails('netbanking')">
+        <img src="images/mobile-banking.png" alt="Net Banking Icon">
+        <label>Net Banking</label>
+        <span class="arrow"><img src="Images/right-arrow.png"></span>
+      </div>
+
+      <!-- UPI Payment Apps -->
+      <div id="upi" class="payment-details">
+        <p>Select Payment App:</p>
+        <div class="upi-apps">
+          <div class="upi-app" onclick="selectUpiApp('Google Pay', this)">
+            <img src="images/google-pay.png" alt="Google Pay">
+          </div>
+          <div class="upi-app" onclick="selectUpiApp('PhonePe', this)">
+            <img src="images/phonepe.png" alt="PhonePe">
+          </div>
+          <div class="upi-app" onclick="selectUpiApp('Paytm', this)">
+            <img src="images/paytm.png" alt="Paytm">
+          </div>
+          <div class="upi-app" onclick="selectUpiApp('Other', this)">
+            <img src="images/other.png" alt="Other">
+          </div>
+        </div>
+        <p id="selected-upi-app" class="selected-message"></p>
+      </div>
+
+      <!-- Enter UPI ID -->
+      <div id="upi-id" class="payment-details">
+        <p>Enter UPI ID:</p>
+        <input type="text" class="input-field" id="upi-id-input" placeholder="e.g., yourname@upi" />
+        <button class="small-btn" onclick="verifyUpiId()">Verify</button>
+        <p id="verify-message" class="verify-message"></p>
+      </div>
+
+      <!-- Credit/Debit Card Details -->
+      <div id="card" class="payment-details">
+        <p>Enter Card Details:</p>
+        <div class="card-container">
+          <input type="text" class="input-field" id="card-number" placeholder="Card Number" oninput="detectCardType()" />
+          <img id="card-type-img" class="card-type-img" src="" alt="Card Type" />
+        </div>
+        <input type="text" class="input-field" placeholder="Name on Card" />
+        <input type="text" class="input-field" placeholder="Expiry Date (MM/YY)" />
+        <input type="text" class="input-field-small" placeholder="CVV" />
+      </div>
+
+      <!-- Net Banking -->
+      <div id="netbanking" class="payment-details">
+        <p>Net Banking option selected. Proceed to payment.</p>
+      </div>
+
+      <a href="screen2.html" class="btn">Proceed to Payment</a>
+    </div>
+  </div>
+<footer class="footer">
+       
+    <p>© 2025 Amritavaidya. All Rights Reserved.</p>
+</footer>
+
+
+  <script>
+    function showDetails(option) {
+      document.querySelectorAll(".payment-details").forEach(detail => {
+        detail.style.display = "none";
+      });
+      const selected = document.getElementById(option);
+      if (selected) {
+        selected.style.display = "block";
+      }
+    }
+
+    function selectUpiApp(appName, selectedElement) {
+      // Deselect all images
+      document.querySelectorAll(".upi-app img").forEach(img => img.classList.remove("selected"));
+     
+      // Select the clicked image
+      selectedElement.querySelector("img").classList.add("selected");
+     
+      const displayMessage = document.getElementById("selected-upi-app");
+      displayMessage.textContent = `You selected: ${appName}`;
+    }
+
+    function verifyUpiId() {
+      const upiId = document.getElementById("upi-id-input").value;
+      const message = document.getElementById("verify-message");
+
+      if (upiId.length > 5 && upiId.includes("@")) {
+        message.textContent = "UPI ID Verified!";
+        message.style.color = "green";
+      } else {
+        message.textContent = "Invalid UPI ID. Please try again.";
+        message.style.color = "red";
+      }
+    }
+  </script>
+ 
+</body>
+</html>

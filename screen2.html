@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Receipt</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+ background: linear-gradient(to bottom, skyblue, white);
+  height: 100vh;
+  margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+   
+
+    .header {
+     display: flex;
+     align-items: center;
+     padding: 25px 20px;
+     background: linear-gradient(45deg, #b2dfdb, #e1f5fe, #dcedc1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      position: absolute;
+      top: 0;
+    }
+
+    .header button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header button img {
+      width: 34px;
+      height: 34px;
+    }
+
+    .header h1 {
+      font-size: 2.0rem;
+      margin: 0;
+      color: #333;
+    }
+   
+     
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+     
+    }
+   
+
+
+
+    .container h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .container p {
+      margin: 8px 0;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #000;
+    }
+
+    .success-message {
+      color: green;
+      font-weight: bold;
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #007bff;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Container for buttons and image aligned horizontally */
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+       gap: 10px;
+    }
+
+    /* Style for download image acting as radio button */
+    .download-radio {
+      margin-left: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Invisible radio button */
+    .download-radio input[type="radio"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0; /* Make the radio button invisible */
+      cursor: pointer;
+    }
+
+    /* Smaller image size for download */
+    .download-radio img {
+      width: 40px; /* Adjust width to be smaller than the button */
+      height: auto;
+    }
+    .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to right, #b2fefa, #0ed2f7);
+    padding: 20px 15px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+
+
+  </style>
+  <!-- Include jsPDF library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Choose Payment Mode Header -->
+  <div class="header">
+    <button onclick="window.history.back()">
+      <img src="images/arrow.png" alt="Back Arrow">
+    </button>
+    <h1>Payment Receipt</h1>
+  </div>
+ 
+ 
+   
+  <!-- Payment Receipt Section -->
+  <div class="container" id="receipt">
+    <h1>Payment Receipt</h1>
+    <p class="success-message">Payment Successful</p>
+    <p><span class="highlight">Patient Name:</span> <span id="patientName">--</span></p>
+    <p><span class="highlight">Doctor Name:</span> <span id="doctorName">--</span></p>
+    <p><span class="highlight">UPI App:</span> <span id="upiApp">--</span></p>
+    <p><span class="highlight">UPI ID:</span> <span id="upiId">--</span></p>
+    <p><span class="highlight">Card Unique ID:</span> <span id="cardId">--</span></p>
+    <p><span class="highlight">Amount Paid:</span> ₹<span id="amountPaid">--</span></p>
+   
+    <!-- Action Buttons Section -->
+    <div class="action-buttons">
+        <a href="screen1.html" class="btn">Make Another Payment</a>
+      <a href="onlineconsultation.jsp" class="btn">Done</a>
+      <!-- Download Image acting as radio button -->
+      <div class="download-radio">
+        <input type="radio" id="downloadReceipt" name="download" onclick="downloadReceiptPDF()">
+        <img src="images/download.png" alt="Download Receipt" onclick="document.getElementById('downloadReceipt').click()">
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+       
+    <p>© 2025 Amritavaidya. All Rights Reserved.</p>
+</footer>
+
+
+  <script>
+   
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        patientName: params.get("patientName") || "--",
+        doctorName: params.get("doctorName") || "--",
+        upiApp: params.get("upiApp") || "--",
+        upiId: params.get("upiId") || "--",
+        cardId: params.get("cardId") || "--",
+        amountPaid: params.get("amountPaid") || "--",
+        status: params.get("status") || "failed",
+      };
+    }
+
+    // Populate the receipt details dynamically
+    const transactionDetails = getQueryParams();
+    document.getElementById("patientName").textContent = transactionDetails.patientName;
+    document.getElementById("doctorName").textContent = transactionDetails.doctorName;
+    document.getElementById("upiApp").textContent = transactionDetails.upiApp;
+    document.getElementById("upiId").textContent = transactionDetails.upiId;
+    document.getElementById("cardId").textContent = transactionDetails.cardId;
+    document.getElementById("amountPaid").textContent = transactionDetails.amountPaid;
+
+    // Update payment status message
+    if (transactionDetails.status.toLowerCase() === "success") {
+      document.querySelector(".success-message").textContent = "Payment Successful";
+    } else {
+      document.querySelector(".success-message").textContent = "";
+      document.querySelector(".error-message").textContent = "Payment Failed";
+    }
+
+    // Function to generate and download PDF
+    function downloadReceiptPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Add receipt content to PDF
+      doc.setFontSize(16);
+      doc.text("Payment Receipt", 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Patient Name: ${transactionDetails.patientName}`, 20, 30);
+      doc.text(`Doctor Name: ${transactionDetails.doctorName}`, 20, 40);
+      doc.text(`UPI App: ${transactionDetails.upiApp}`, 20, 50);
+      doc.text(`UPI ID: ${transactionDetails.upiId}`, 20, 60);
+      doc.text(`Card Unique ID: ${transactionDetails.cardId}`, 20, 70);
+      doc.text(`Amount Paid: ₹${transactionDetails.amountPaid}`, 20, 80);
+      doc.text("Payment Status: Payment Successful", 20, 90);
+
+      // Save PDF as 'payment_receipt.pdf'
+      doc.save("payment_receipt.pdf");
+    }
+  </script>
+</body>
+</html>

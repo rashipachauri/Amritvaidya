@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #white;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+           
+             background: linear-gradient(45deg, #b2dfdb, #e1f5fe, #dcedc1);
+             padding: 20px;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+              border-radius: 15px;
+             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+             }
+
+           
+        .header img {
+            height: 100px;
+            width: 100px;
+        }
+        .menu {
+            display: flex;
+            gap: 35px;
+            position: relative;
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+           
+            font-weight: bold;
+        }
+        .menu a {
+            text-decoration:none;
+            color: black;
+            font-weight: bold;
+            position: relative;
+             font-size: 20px;
+        }
+        .menu-item {
+            position: relative;
+           font-size: 20px;
+        }
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+              background: #4db6ac;
+            border: 1px solid #ddd;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1000;
+            min-width: 250px;
+            overflow: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+   
+   
+        }
+        .dropdown a {
+            display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    background: white;
+    border-radius: 8px;
+    margin: 5px 10px;
+    transition: background 0.3s ease, transform 0.2s ease;
+        }
+       
+        .dropdown a:hover {
+            background-color: #b2dfdb;
+    transform: scale(1.05);
+        }
+       
+        .dropdown.show {
+          display: block;
+          opacity: 1;
+          transform: translateY(0);
+}
+        .menu-item:hover .dropdown {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .menu-item:last-child .dropdown {
+            left: auto;
+            right: 0;
+        }
+        .menu a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            position: relative;
+            font-size: 20px;
+        }
+        .get-in-touch {
+            padding: 15px 10px;
+            text-align: center;
+            height: 180px;
+            background: linear-gradient(45deg, #b2dfdb, #e1f5fe, #dcedc1);
+        }
+        .get-in-touch h2 {
+            font-size: 48px;
+            font-weight: bold;
+        }
+        .get-in-touch p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .contact-container {
+            margin: 30px auto;
+            padding: 40px;
+            width: 750px;
+            background-image: url('images/bb3.jpg');
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+        }
+        .contact-right h2 {
+            font-size: 32px;
+            text-align: center;
+            color: black;
+            margin-bottom: 20px;
+        }
+        .contact-right input,
+        .contact-right textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #f8f9fa;
+        }
+        .contact-right button {
+            background: linear-gradient(90deg, #4CAF50, #008CBA);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+         .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right, #b2fefa, #0ed2f7);
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="images/LOGO.png" alt="AmritaVaidya Logo">
+        <div class="menu">
+            <div class="menu-item">
+                <a href="#">Login</a>
+                <div class="dropdown">
+                    <a href="login1.jsp">Are you a Patient?</a>
+                    <a href="login1.jsp">Are you a Doctor?</a>
+                </div>
+            </div>
+            <a href="started.jsp">Home</a>
+            <a href="#about">About Us</a>
+            <a href="faq.jsp">FAQs</a>
+            <a href="contact.html">Contact Us</a>
+           
+            <div class="menu-item">
+                <a href="#">Profile</a>
+                <div class="dropdown">
+                    <a href="profile.jsp">My Profile</a>
+                   
+                    <a href="logout.jsp">Sign Out</a>
+                   
+                </div>
+            </div>
+            </div>
+         
+    </div>
+    <div class="get-in-touch">
+        <h2>Get In Touch</h2>
+        <p> Have questions about your online consultation? Reach out to us anytime!</p>
+    </div>
+    <div class="contact-container">
+        <div class="contact-right">
+            <h2>CONTACT US</h2>
+            <form action="sendEmail.jsp" method="post" onsubmit="return validateForm()">
+                <input type="text" id="name" name="name" placeholder="Your Name">
+                <input type="email" id="email" name="email" placeholder="Your Email">
+                <textarea id="message" name="message" rows="5" placeholder="Your Message"></textarea>
+                <button type="submit">Send Your Message</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let message = document.getElementById("message").value.trim();
+            if (name === "" || email === "" || message === "") {
+                alert("All fields are required!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <footer class="footer">
+   
+    <p>© 2025 Amritavaidya. All Rights Reserved.</p>
+</footer>
+</body>
+</html>
